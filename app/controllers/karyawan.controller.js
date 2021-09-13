@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 // Create and Save a new Karyawan
 exports.create = (req, res) => {
     // Validate request
-    if(!req.body.email) {
+    if(!req.body.email_karyawan) {
         return res.status(400).send({
             message: "Karyawan email can not be empty"
         });
@@ -13,23 +13,12 @@ exports.create = (req, res) => {
     // Create a Karyawan
     const karyawan = new Karyawan({
         nama: req.body.nama, 
-        email: req.body.email,
+        email_karyawan: req.body.email_karyawan,
         alamat: req.body.alamat,
         password: req.body.password,
         jabatan: req.body.jabatan,
         status: req.body.status,
     });
-
-    bcrypt.genSalt(10,(err,salt) => {
-        bcrypt.hash(karyawan.password,salt,(err,hash) => {
-            if(err) throw err;
-                karyawan.password = hash;
-                karyawan.save()
-                    .then(karyawan => res.json(karyawan))
-                    .catch(err => console.log(err))
-                return res.json(karyawan);
-        })
-    })
 
     // Save Karyawan in the database
     karyawan.save()
@@ -41,6 +30,28 @@ exports.create = (req, res) => {
         });
     });
 };
+
+// login karyawan
+exports.loginOne = (req,res) => {
+    // function generateToken(customer){
+    //     return jwt.sign({data: customer}, tokenSecret, {expiresIn: '24h'})
+    // }
+    Karyawan.findOne({email_karyawan: req.body.email_karyawan})
+    .then(karyawan => {
+        if(!karyawan) {
+            res.status(400).json({error: "email not found"})}
+        else{
+            
+            if(req.body.password == karyawan.password){
+                res.status(200).json({message: "password ok"})
+            }
+            else {
+                res.status(400).json({error: "wrong email or password"})
+            }
+        }
+        console.log('hello', karyawan)
+    })
+}
 
 // Retrieve and return all karyawans from the database.
 exports.findAll = (req, res) => {
@@ -79,7 +90,7 @@ exports.findOne = (req, res) => {
 // Update a karyawan identified by the custid in the request
 exports.update = (req, res) => {
     // Validate Request
-    if(!req.body.email) {
+    if(!req.body.email_karyawan) {
         return res.status(400).send({
             message: "Karyawan email can not be empty"
         });
@@ -88,7 +99,7 @@ exports.update = (req, res) => {
     // Find note and update it with the request body
     Karyawan.findByIdAndUpdate(req.params.karyId, {
         nama: req.body.nama, 
-        email: req.body.email,
+        email_karyawan: req.body.email_karyawan,
         alamat: req.body.alamat,
         password: req.body.password,
         jabatan: req.body.jabatan,

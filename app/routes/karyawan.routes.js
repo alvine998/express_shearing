@@ -7,6 +7,9 @@ module.exports = (app) => {
     // Retrieve all karyawans
     app.get('/karyawans', karyawans.findAll);
 
+    // Login Karyawan
+    app.post('/karyawans/login', karyawans.loginOne);
+
     // Retrieve a single Note with noteId
     app.get('/karyawans/:karyId', karyawans.findOne);
 

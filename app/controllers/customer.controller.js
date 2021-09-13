@@ -1,5 +1,8 @@
 const Customer = require('../models/customer.model.js');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken'); 
+const tokenSecret = '123456';
+
 
 // Create and Save a new Note
 exports.create = (req, res) => {
@@ -18,17 +21,6 @@ exports.create = (req, res) => {
         password: req.body.password
     });
 
-    bcrypt.genSalt(10,(err,salt) => {
-        bcrypt.hash(customer.password,salt,(err,hash) => {
-            if(err) throw err;
-                customer.password = hash;
-                customer.save()
-                    .then(customer => res.json(customer))
-                    .catch(err => console.log(err))
-                return res.json(customer);
-        })
-    })
-
     // Save Customer in the database
     customer.save()
     .then(data => {
@@ -39,6 +31,27 @@ exports.create = (req, res) => {
         });
     });
 };
+
+exports.loginOne = (req,res) => {
+    // function generateToken(customer){
+    //     return jwt.sign({data: customer}, tokenSecret, {expiresIn: '24h'})
+    // }
+    Customer.findOne({email: req.body.email})
+    .then(customer => {
+        if(!customer) {
+            res.status(400).json({error: "email not found"})}
+        else{
+            
+            if(req.body.password == customer.password){
+                res.status(200).json({message: "password ok"})
+            }
+            else {
+                res.status(400).json({error: "wrong email or password"})
+            }
+        }
+        console.log('hello', customer)
+    })
+}
 
 // Retrieve and return all customers from the database.
 exports.findAll = (req, res) => {

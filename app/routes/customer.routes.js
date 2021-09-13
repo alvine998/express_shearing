@@ -1,5 +1,6 @@
 module.exports = (app) => {
     const customers = require('../controllers/customer.controller.js');
+    const middleware = require('../middleware/auth.middleware');
 
     // Create a new Note
     app.post('/customers', customers.create);
@@ -7,6 +8,10 @@ module.exports = (app) => {
     // Retrieve all customers
     app.get('/customers', customers.findAll);
 
+    // Login
+    app.get('/customers/jwt-test', middleware.verify, (req,res) => {res.status(200).json(req.customer)});
+
+    app.post('/customers/login', customers.loginOne);
     // Retrieve a single Note with noteId
     app.get('/customers/:custId', customers.findOne);
 

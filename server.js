@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 
@@ -11,7 +12,7 @@ app.use(bodyParser.json())
 
 // define a simple route
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
+    res.json(bcrypt.hash('hello'));
 });
 
 // Configuring the database
@@ -33,6 +34,11 @@ mongoose.connect(dbConfig.url, {
 // Require Notes routes
 require('./app/routes/customer.routes.js')(app);
 require('./app/routes/karyawan.routes.js')(app);
+require('./app/routes/userlogin.routes.js')(app);
+require('./app/routes/invoice.routes.js')(app);
+require('./app/routes/order.routes.js')(app);
+require('./app/routes/detailorder.routes.js')(app);
+
 
 // listen for requests
 app.listen(3000, () => {

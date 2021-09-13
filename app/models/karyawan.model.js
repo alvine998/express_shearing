@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const KaryawanSchema = mongoose.Schema({
     nama: String,
-    email: String,
+    email_karyawan: String,
     alamat: String,
     password: String,
     jabatan: String,
