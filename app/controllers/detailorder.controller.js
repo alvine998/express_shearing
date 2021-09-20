@@ -60,7 +60,7 @@ exports.findAll = (req, res) => {
 // Retreiviing by customer id
 exports.findOneCustomerId = (req, res) => {
     const custId = req.params.custId; 
-    DetailOrder.findOne({"custid":custId})
+    DetailOrder.find({"custid":custId})
     .then(detailorder => {
         if(!detailorder) {
             return res.status(403).send({

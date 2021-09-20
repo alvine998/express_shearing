@@ -7,6 +7,7 @@ const CustomerSchema = mongoose.Schema({
     namapt: String,
     alamatpt: String,
     password: String,
+    session_order: Number,
 }, {
     timestamps: true
 });

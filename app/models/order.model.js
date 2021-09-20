@@ -6,7 +6,7 @@ const OrderSchema = new mongoose.Schema({
     custid: {type:ObjectId, ref:'customer'},
     alamatpt: String,
     detorderid: [{type:ObjectId, ref:'detailorder'}],
-    status: {type: String, default:'Belum Verifikasi'} ,
+    status: String ,
 }, {
     timestamps: true
 });

@@ -20,7 +20,8 @@ exports.create = (req, res) => {
         nohp: req.body.nohp,
         namapt: req.body.namapt,
         alamatpt: req.body.alamatpt,
-        password: req.body.password
+        password: req.body.password,
+        session_order: req.body.session_order
     });
 
     // Save Customer in the database
@@ -111,11 +112,11 @@ exports.findOneEmail = (req, res) => {
 // Update a customer identified by the custid in the request
 exports.update = (req, res) => {
     // Validate Request
-    if(!req.body.email) {
-        return res.status(400).send({
-            message: "Customer email can not be empty"
-        });
-    }
+    // if(!req.body.email) {
+    //     return res.status(400).send({
+    //         message: "Customer email can not be empty"
+    //     });
+    // }
 
     // Find note and update it with the request body
     Customer.findByIdAndUpdate(req.params.custId, {
@@ -124,7 +125,8 @@ exports.update = (req, res) => {
         nohp: req.body.nohp,
         namapt: req.body.namapt,
         alamatpt: req.body.alamatpt,
-        password: req.body.password
+        password: req.body.password,
+        session_order: req.body.session_order
     }, {new: true})
     .then(customer => {
         if(!customer) {
