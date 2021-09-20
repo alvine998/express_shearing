@@ -18,6 +18,8 @@ exports.create = (req, res) => {
         nama: req.body.nama, 
         email: req.body.email,
         nohp: req.body.nohp,
+        namapt: req.body.namapt,
+        alamatpt: req.body.alamatpt,
         password: req.body.password
     });
 
@@ -87,6 +89,25 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Find By email
+// Find a single note with a noteId
+exports.findOneEmail = (req, res) => {
+    const emails = req.params.emailId; 
+    Customer.findOne({"email":emails})
+    .then(customer => {
+        if(!customer) {
+            return res.status(403).send({
+                message: "Customer not found with id " + req.params.emailId
+            });            
+        }
+        res.send(customer);
+    }).catch(err => {
+        return res.status(500).send({
+            err: "Error retrieving customer with id " + req.params.emailId
+        });
+    });
+};
+
 // Update a customer identified by the custid in the request
 exports.update = (req, res) => {
     // Validate Request
@@ -101,6 +122,8 @@ exports.update = (req, res) => {
         nama: req.body.nama, 
         email: req.body.email,
         nohp: req.body.nohp,
+        namapt: req.body.namapt,
+        alamatpt: req.body.alamatpt,
         password: req.body.password
     }, {new: true})
     .then(customer => {

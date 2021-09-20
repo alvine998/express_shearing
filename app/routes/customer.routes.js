@@ -15,6 +15,9 @@ module.exports = (app) => {
     // Retrieve a single Note with noteId
     app.get('/customers/:custId', customers.findOne);
 
+    // Retrieve a single Note with noteId
+    app.get('/customerss/:emailId', customers.findOneEmail);
+
     // Update a Note with noteId
     app.put('/customers/:custId', customers.update);
 

@@ -5,6 +5,7 @@ exports.create = (req, res) => {
 
     // Create a Note
     const detailorder = new DetailOrder({
+        custid: req.body.custid,
         nama_item: req.body.nama_item,
         jumlah_item: req.body.jumlah_item,
         harga_satuan: req.body.harga_satuan,
@@ -22,6 +23,28 @@ exports.create = (req, res) => {
     });
 };
 
+// // Create another one
+// exports.createForOrder = (req, res) => {
+
+//     // Create a Note
+//     const detailorder = new DetailOrder({
+//         nama_item: req.body.nama_item,
+//         jumlah_item: req.body.jumlah_item,
+//         harga_satuan: req.body.harga_satuan,
+//         total_harga: req.body.total_harga
+//     });
+
+//     // Save Customer in the database
+//     detailorder.save()
+//     .then(data => {
+//         res.send(data);
+//     }).catch(err => {
+//         res.status(500).send({
+//             message: err.message || "Some error occurred while creating the Detail Order."
+//         });
+//     });
+// };
+
 // Retrieve and return all customers from the database.
 exports.findAll = (req, res) => {
     DetailOrder.find()
@@ -30,6 +53,24 @@ exports.findAll = (req, res) => {
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving detail order."
+        });
+    });
+};
+
+// Retreiviing by customer id
+exports.findOneCustomerId = (req, res) => {
+    const custId = req.params.custId; 
+    DetailOrder.findOne({"custid":custId})
+    .then(detailorder => {
+        if(!detailorder) {
+            return res.status(403).send({
+                message: "Customer not found with id " + req.params.custId
+            });            
+        }
+        res.send(detailorder);
+    }).catch(err => {
+        return res.status(500).send({
+            err: "Error retrieving customer with id " + req.params.custId
         });
     });
 };
@@ -60,6 +101,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     // Find note and update it with the request body
     DetailOrder.findByIdAndUpdate(req.params.detorderId, {
+        custid: req.body.custid,
         nama_item: req.body.nama_item,
         jumlah_item: req.body.jumlah_item,
         harga_satuan: req.body.harga_satuan,

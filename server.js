@@ -38,6 +38,7 @@ require('./app/routes/userlogin.routes.js')(app);
 require('./app/routes/invoice.routes.js')(app);
 require('./app/routes/order.routes.js')(app);
 require('./app/routes/detailorder.routes.js')(app);
+require('./app/routes/brokenmaterial.routes.js')(app);
 
 
 // listen for requests
