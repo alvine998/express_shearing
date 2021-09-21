@@ -11,6 +11,7 @@ exports.create = (req, res) => {
         custid: req.body.custid,
         alamatpt: req.body.alamatpt,
         detorderid: req.body.detorderid,
+        status: req.body.status
     });
 
     console.log(order);
