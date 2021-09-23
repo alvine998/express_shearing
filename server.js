@@ -31,6 +31,9 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
+global.__basedir = __dirname;
+
+
 // Require Notes routes
 require('./app/routes/customer.routes.js')(app);
 require('./app/routes/karyawan.routes.js')(app);

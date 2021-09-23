@@ -13,9 +13,18 @@ module.exports = (app) => {
     // Retrieve a single Note with custid
     app.get('/detorderss/:custId', detOrders.findOneCustomerId);
 
+    // Retrieve a single Note with custid
+    app.get('/detorderss/session/:sessionId', detOrders.findSession);
+
     // Update a Note with noteId
     app.put('/detorders/:detorderId', detOrders.update);
 
+      // Update a Note with noteId
+      app.put('/detorderss/session/:custId', detOrders.updateSession);
+
     // Delete a Note with noteId
     app.delete('/detorders/:detorderId', detOrders.delete);
+
+    app.delete('/detorders', detOrders.deleteAll);
+
 }

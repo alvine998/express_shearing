@@ -7,6 +7,7 @@ const DetailOrderSchema = mongoose.Schema({
     jumlah_item: Number,
     harga_satuan: Number,
     total_harga: Number,
+    session_detail: Number,
 }, {
     timestamps: true
 });

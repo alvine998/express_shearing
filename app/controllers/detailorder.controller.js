@@ -9,7 +9,9 @@ exports.create = (req, res) => {
         nama_item: req.body.nama_item,
         jumlah_item: req.body.jumlah_item,
         harga_satuan: req.body.harga_satuan,
-        total_harga: req.body.total_harga
+        total_harga: req.body.total_harga,
+        session_detail: req.body.session_detail
+
     });
 
     // Save Customer in the database
@@ -75,6 +77,24 @@ exports.findOneCustomerId = (req, res) => {
     });
 };
 
+// Retreiviing by session id
+exports.findSession = (req, res) => {
+    const sessionId = req.params.sessionId; 
+    DetailOrder.find({"session_detail":sessionId})
+    .then(detailorder => {
+        if(!detailorder) {
+            return res.status(403).send({
+                message: "Customer not found with id " + req.params.sessionId
+            });            
+        }
+        res.send(detailorder);
+    }).catch(err => {
+        return res.status(500).send({
+            err: "Error retrieving detail session with id " + req.params.sessionId
+        });
+    });
+};
+
 // Find a single note with a noteId
 exports.findOne = (req, res) => {
     DetailOrder.findById(req.params.detorderId)
@@ -105,7 +125,8 @@ exports.update = (req, res) => {
         nama_item: req.body.nama_item,
         jumlah_item: req.body.jumlah_item,
         harga_satuan: req.body.harga_satuan,
-        total_harga: req.body.total_harga
+        total_harga: req.body.total_harga,
+        session_detail: req.body.session_detail
     }, {new: true})
     .then(detailorder => {
         if(!detailorder) {
@@ -122,6 +143,35 @@ exports.update = (req, res) => {
         }
         return res.status(500).send({
             message: "Error updating detail order with id " + req.params.detorderId
+        });
+    });
+};
+
+// Update a customer identified by the custid in the request
+exports.updateSession = (req, res) => {
+    // Find note and update it with the request body
+    DetailOrder.updateMany(req.params.custId, {
+        nama_item: req.body.nama_item,
+        jumlah_item: req.body.jumlah_item,
+        harga_satuan: req.body.harga_satuan,
+        total_harga: req.body.total_harga,
+        session_detail: req.body.session_detail
+    }, {new: true})
+    .then(detailorder => {
+        if(!detailorder) {
+            return res.status(404).send({
+                message: "Cust Id order not found with id " + req.params.custId
+            });
+        }
+        res.send(detailorder);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Detail order not found with id " + req.params.custId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error updating detail order with id " + req.params.custId
         });
     });
 };
@@ -147,3 +197,20 @@ exports.delete = (req, res) => {
         });
     });
 };
+
+exports.deleteAll = (req,res) => {
+    DetailOrder.deleteMany({})
+    .then(
+        data => {
+            res.send({
+                message: `${data.deletedCount} Delete Successfully` 
+            });
+        }
+    )
+    .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while removing all tutorials."
+        });
+    });
+}

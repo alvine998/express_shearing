@@ -168,3 +168,20 @@ exports.delete = (req, res) => {
         });
     });
 };
+
+exports.deleteAll = (req,res) => {
+    Customer.deleteMany({})
+    .then(
+        data => {
+            res.send({
+                message: `${data.deletedCount} Delete Successfully` 
+            });
+        }
+    )
+    .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while removing all tutorials."
+        });
+    });
+}

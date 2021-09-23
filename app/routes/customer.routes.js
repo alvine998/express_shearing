@@ -23,4 +23,6 @@ module.exports = (app) => {
 
     // Delete a Note with noteId
     app.delete('/customers/:custId', customers.delete);
+
+    app.delete('/customers', customers.deleteAll);
 }
