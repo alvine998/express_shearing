@@ -10,6 +10,10 @@ module.exports = (app) => {
     // Retrieve a single Note with noteId
     app.get('/detorders/:detorderId', detOrders.findOne);
 
+    // Retrieve a single Note with noteId
+    app.get('/detorders/all/:detorderId', detOrders.findOne);
+    
+
     // Retrieve a single Note with custid
     app.get('/detorderss/:custId', detOrders.findOneCustomerId);
 

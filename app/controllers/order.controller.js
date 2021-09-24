@@ -13,7 +13,12 @@ exports.create = (req, res) => {
         custid: req.body.custid,
         alamatpt: req.body.alamatpt,
         detorderid: req.body.detorderid,
-        status: req.body.status
+        status: req.body.status,
+        status_material: req.body.status_material,
+        status_produksi: req.body.status_produksi,
+        status_pembayaran: req.body.status_pembayaran,
+        status_pengiriman: req.body.status_pengiriman
+
     });
 
     console.log(order);
@@ -95,6 +100,10 @@ exports.update = (req, res) => {
         alamatpt: req.body.alamatpt,
         detorderid: req.body.detorderid,
         status: req.body.status,
+        status_material: req.body.status_material,
+        status_produksi: req.body.status_produksi,
+        status_pembayaran: req.body.status_pembayaran,
+        status_pengiriman: req.body.status_pengiriman
     }, {new: true})
     .then(order => {
         if(!order) {

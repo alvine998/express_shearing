@@ -7,6 +7,10 @@ const OrderSchema = new mongoose.Schema({
     alamatpt: String,
     detorderid: [{type:ObjectId, ref:'detailorder'}],
     status: String ,
+    status_material: String,
+    status_produksi: String,
+    status_pembayaran: String,
+    status_pengiriman: String
 }, {
     timestamps: true
 });
