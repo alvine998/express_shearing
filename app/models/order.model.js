@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
-const {ObjectId} = mongoose.Schema;
+const {ObjectId} = mongoose.Schema.Types;
 
 const OrderSchema = new mongoose.Schema({
     namapt: String,
-    custid: {type:ObjectId, ref:'customer'},
+    no_po:Number,
+    custid: {type:ObjectId, ref:'customers'},
     alamatpt: String,
-    detorderid: [{type:ObjectId, ref:'detailorder'}],
+    detorderid: [{type:ObjectId, ref:'detailorders.model'}],
     status: String ,
     status_material: String,
     status_produksi: String,
     status_pembayaran: String,
-    status_pengiriman: String
+    status_pengiriman: String,
+    image: String,
+    image_tf:String,
+    image_pengiriman:String
 }, {
     timestamps: true
 });

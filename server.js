@@ -1,14 +1,25 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
-
+const path = require('path');
+const cors = require('cors');
 const app = express();
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
+var corsOptions = {
+    origin: "http://localhost:8081"
+  };
+
+  app.use(cors(corsOptions));
+
+  app.use(express.urlencoded({ extended: true }));
+
+
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
+
 
 // define a simple route
 app.get('/', (req, res) => {
@@ -31,8 +42,6 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-global.__basedir = __dirname;
-
 
 // Require Notes routes
 require('./app/routes/customer.routes.js')(app);
@@ -42,7 +51,14 @@ require('./app/routes/invoice.routes.js')(app);
 require('./app/routes/order.routes.js')(app);
 require('./app/routes/detailorder.routes.js')(app);
 require('./app/routes/brokenmaterial.routes.js')(app);
+require('./app/routes/images.routes')(app);
 
+global.__basedir = __dirname;
+
+
+// express to access file statics
+const dirname = path.resolve();
+app.use("/resources/static/assets/uploads/", express.static(path.join(dirname, "/resources/static/assets/uploads/")));
 
 // listen for requests
 app.listen(3000, () => {

@@ -1,3 +1,4 @@
+const multer = require('multer');
 module.exports = (app) => {
     const orders = require('../controllers/order.controller');
 
@@ -13,13 +14,13 @@ module.exports = (app) => {
     app.get('/orderss/:custid', orders.findOneCust);
 
     // Retrieve Image File
-    app.get('/orderss/upload/files', orders.getListFiles);
+    app.get('/upload/files', orders.getListFiles);
 
     // Retrieve Image File
-    app.get('/orderss/upload/files/:name', orders.download);
+    // app.get('/upload/files/:name', orders.download);
 
     // Upload Image
-    app.post('/orders/upload', orders.upload);
+    // app.post('/uploads', orders.upload);
 
 
     // Update a Note with noteId

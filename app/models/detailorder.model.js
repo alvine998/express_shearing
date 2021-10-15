@@ -3,6 +3,8 @@ const {ObjectId} = mongoose.Schema;
 
 const DetailOrderSchema = mongoose.Schema({
     custid: {type:ObjectId, ref:'customer.model'},
+    orderid: {type:ObjectId, ref:'order.model'},
+    berat: Number,
     nama_item: String,
     jumlah_item: Number,
     harga_satuan: Number,

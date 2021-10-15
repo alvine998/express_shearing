@@ -6,6 +6,7 @@ exports.create = (req, res) => {
     // Create a Note
     const detailorder = new DetailOrder({
         custid: req.body.custid,
+        berat: req.body.berat,
         nama_item: req.body.nama_item,
         jumlah_item: req.body.jumlah_item,
         harga_satuan: req.body.harga_satuan,
@@ -59,23 +60,23 @@ exports.findAll = (req, res) => {
     });
 };
 
-// // Retreiviing by customer id
-// exports.findAllById = (req, res) => {
-//     const orderId = req.params.orderId; 
-//     DetailOrder.find({"custid":custId})
-//     .then(detailorder => {
-//         if(!detailorder) {
-//             return res.status(403).send({
-//                 message: "Customer not found with id " + req.params.custId
-//             });            
-//         }
-//         res.send(detailorder);
-//     }).catch(err => {
-//         return res.status(500).send({
-//             err: "Error retrieving customer with id " + req.params.custId
-//         });
-//     });
-// };
+// Retreiviing by customer id
+exports.findAllById = (req, res) => {
+    const orderId = req.params.orderId; 
+    DetailOrder.find({"orderid":orderId})
+    .then(detailorder => {
+        if(!detailorder) {
+            return res.status(403).send({
+                message: "Customer not found with id " + req.params.orderId
+            });            
+        }
+        res.send(detailorder);
+    }).catch(err => {
+        return res.status(500).send({
+            err: "Error retrieving customer with id " + req.params.orderId
+        });
+    });
+};
 
 // Retreiviing by customer id
 exports.findOneCustomerId = (req, res) => {
@@ -140,6 +141,7 @@ exports.update = (req, res) => {
     // Find note and update it with the request body
     DetailOrder.findByIdAndUpdate(req.params.detorderId, {
         custid: req.body.custid,
+        berat: req.body.berat,
         nama_item: req.body.nama_item,
         jumlah_item: req.body.jumlah_item,
         harga_satuan: req.body.harga_satuan,

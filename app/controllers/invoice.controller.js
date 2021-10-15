@@ -13,8 +13,16 @@ exports.create = (req, res) => {
 
              const invoice = new Invoice({
                 orderid: req.body.orderid, 
-                karyawanid: req.body.karyawanid,
-                total_biaya: req.body.total_biaya
+                nama_karyawan: req.body.nama_karyawan,
+                custid: req.body.custid,
+                invoice_no: req.body.invoice_no,
+                tanggal: req.body.tanggal,
+                nama_pt: req.body.nama_pt,
+                alamat_pt: req.body.alamat_pt,
+                total_harga: req.body.total_harga,
+                ppn: req.body.ppn,
+                total_biaya: req.body.total_biaya,
+                status: req.body.status,
             });
             console.log(invoice);
             invoice.save()
@@ -71,13 +79,68 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Find a single note with a noteId
+exports.findOrderOne = (req, res) => {
+    const orderId = req.params.orderId;
+    Invoice.findOne({'orderid': orderId})
+    .then(invoice => {
+        if(!invoice) {
+            return res.status(404).send({
+                message: "Invoice not found with order id " + req.params.orderId
+            });            
+        }
+        res.send(invoice);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Invoice not found with order id " + req.params.orderId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving Invoice with order id " + req.params.orderId
+        });
+    });
+};
+
+// Find a single note with a noteId
+exports.findInvoice = (req, res) => {
+    const custId = req.params.custId;
+    Invoice.find({'custid': custId})
+    .then(invoice => {
+        if(!invoice) {
+            return res.status(404).send({
+                message: "Invoice not found with order id " + req.params.custId
+            });            
+        }
+        res.send(invoice);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Invoice not found with order id " + req.params.custId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving Invoice with order id " + req.params.custId
+        });
+    });
+};
+
 // Update a invoice identified by the invId in the request
 exports.update = (req, res) => {
     // Find note and update it with the request body
     Invoice.findByIdAndUpdate(req.params.invId, {
         orderid: req.body.orderid, 
-        karyawanid: req.body.karyawanid,
-        total_biaya: req.body.total_biaya
+        nama_karyawan: req.body.nama_karyawan,
+        custid: req.body.custid,
+        invoice_no: req.body.invoice_no,
+        tanggal: req.body.tanggal,
+        nama_pt: req.body.nama_pt,
+        alamat_pt: req.body.alamat_pt,
+        total_harga: req.body.total_harga,
+        ppn: req.body.ppn,
+        total_biaya: req.body.total_biaya,
+        status: req.body.status,
+
     }, {new: true})
     .then(invoice => {
         if(!invoice) {

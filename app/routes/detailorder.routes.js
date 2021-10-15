@@ -11,8 +11,7 @@ module.exports = (app) => {
     app.get('/detorders/:detorderId', detOrders.findOne);
 
     // Retrieve a single Note with noteId
-    app.get('/detorders/all/:detorderId', detOrders.findOne);
-    
+    app.get('/detorders/all/:detorderId', detOrders.findAllById);
 
     // Retrieve a single Note with custid
     app.get('/detorderss/:custId', detOrders.findOneCustomerId);

@@ -10,6 +10,10 @@ module.exports = (app) => {
     // Retrieve a single Note with noteId
     app.get('/invoices/:invId', invoices.findOne);
 
+    // Retrieve a single Note with noteId
+    app.get('/invoicess/:orderId', invoices.findOrderOne);
+    app.get('/invoicesss/:custId', invoices.findInvoice);
+
     // Update a Note with noteId
     app.put('/invoices/:invId', invoices.update);
 
